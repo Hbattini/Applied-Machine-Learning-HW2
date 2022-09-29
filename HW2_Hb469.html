@@ -14973,8 +14973,8 @@ converted to “good”; this is easily done using nltk.stem).</p>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>(5329, 627)
-(2284, 627)
+<pre>(5329, 629)
+(2284, 629)
 </pre>
 </div>
 </div>
@@ -15062,8 +15062,8 @@ converted to “good”; this is easily done using nltk.stem).</p>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>F1 Score for Training Set:  0.7895454545454546
-F1 Score for Development Set:  0.7190889370932755
+<pre>F1 Score for Training Set:  0.7839032333100722
+F1 Score for Development Set:  0.7190082644628097
 </pre>
 </div>
 </div>
@@ -15141,8 +15141,8 @@ F1 Score for Development Set:  0.7190889370932755
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>F1 Score for Training Set:  0.7785016286644951
-F1 Score for Development Set:  0.7246376811594204
+<pre>F1 Score for Training Set:  0.7728781412991939
+F1 Score for Development Set:  0.7259180415114422
 </pre>
 </div>
 </div>
@@ -15219,8 +15219,8 @@ F1 Score for Development Set:  0.7246376811594204
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>F1 Score for Training Set:  0.7809965237543453
-F1 Score for Development Set:  0.7225592939878654
+<pre>F1 Score for Training Set:  0.7840641206977842
+F1 Score for Development Set:  0.7236286919831223
 </pre>
 </div>
 </div>
@@ -15275,9 +15275,9 @@ F1 Score for Development Set:  0.7225592939878654
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>No Regularization Training and Development Set:  0.7895454545454546 0.7190889370932755
-L1 Regularization Training and Development Set:  0.7785016286644951 0.7246376811594204
-L2 Regularication Training and Development Set:  0.7809965237543453 0.7225592939878654
+<pre>No Regularization Training and Development Set:  0.7839032333100722 0.7190082644628097
+L1 Regularization Training and Development Set:  0.7728781412991939 0.7259180415114422
+L2 Regularication Training and Development Set:  0.7840641206977842 0.7236286919831223
 </pre>
 </div>
 </div>
@@ -15334,11 +15334,11 @@ L2 Regularication Training and Development Set:  0.7809965237543453 0.7225592939
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>The 5 most important words weighted by the algorithm deciding if a tweet is about a real disaster are:
-bombing       3.538424
-debris        3.524337
-airport       3.178497
-typhoon       3.074675
-derailment    3.031157
+bombing       3.743105
+typhoon       3.599560
+derailment    3.187832
+debris        3.063970
+earthquake    2.989906
 Name: words, dtype: float64
 </pre>
 </div>
@@ -15461,8 +15461,8 @@ It’s normal to take α=1.</p>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Proportions: [0.56708576 0.43291424]
-F1 Score of Development set using Bernoulli Naive Bayes:  0.7161572052401747
+<pre>Proportions: [0.57721899 0.42278101]
+F1 Score of Development set using Bernoulli Naive Bayes:  0.723293381969776
 </pre>
 </div>
 </div>
@@ -15534,8 +15534,8 @@ F1 Score of Development set using Bernoulli Naive Bayes:  0.7161572052401747
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Logistic Regression F1 Score: 0.7225592939878654
-Bernoulli Naive Bayes F1 Score:  0.7161572052401747
+<pre>Logistic Regression F1 Score: 0.7236286919831223
+Bernoulli Naive Bayes F1 Score:  0.723293381969776
 </pre>
 </div>
 </div>
@@ -15586,18 +15586,19 @@ Bernoulli Naive Bayes F1 Score:  0.7161572052401747
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#N-Gram Model</span>
 
 <span class="c1">#Minimum number of words is determined manually using iterative processing to determine which value for M returns an actualized difference between using</span>
-<span class="c1">#the Bag of Words model and N-gram model with 2-grams present in the new word count. Min_df was set to 15 after testing with 50,20,15,10. </span>
-<span class="n">count_vect2</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">ngram_range</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">binary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">min_df</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="c1">#the Bag of Words model and N-gram model with 2-grams present in the new word count. Min_df was set to 5 after testing with 50,20,15,10 and 5. </span>
+<span class="c1">#Using 5 is to improve testing data set from less than 80 words to ~450 words</span>
+<span class="n">count_vect2</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">ngram_range</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">binary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">min_df</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">Xg_train</span> <span class="o">=</span> <span class="n">count_vect2</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_t</span><span class="p">[</span><span class="s2">"text"</span><span class="p">])</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span> 
 <span class="n">Xg_dev</span> <span class="o">=</span> <span class="n">count_vect2</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_d</span><span class="p">[</span><span class="s1">'text'</span><span class="p">])</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Number of 1-gram and 2-gram phrases in N-Gram Bag: "</span><span class="p">,</span> <span class="n">Xg_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-
-<span class="c1">#10 2 gram from vocabulary to find specifically the 2-gram words. </span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">ngram_range</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">binary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">min_df</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-<span class="n">m</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_t</span><span class="p">[</span><span class="s1">'text'</span><span class="p">])</span>
-<span class="n">names2</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+<span class="n">names2</span> <span class="o">=</span> <span class="n">count_vect2</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"10, 2-gram words from the N-Gram Bag:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">names2</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="mi">15</span><span class="p">])</span>
+
+<span class="c1">#10 2 gram from vocabulary to find specifically the 2-gram words. </span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">ngram_range</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">binary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">min_df</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_t</span><span class="p">[</span><span class="s1">'text'</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Number of 1-gram and 2-gram phrases in N-Gram Bag: "</span><span class="p">,</span> <span class="n">Xg_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
 
 
@@ -15640,10 +15641,10 @@ Bernoulli Naive Bayes F1 Score:  0.7161572052401747
 <span class="n">F1_BNB3</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">Y_train</span><span class="p">,</span><span class="n">idx3</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Bernoulli Naive Bayes Training and Dev F1 Score: "</span><span class="p">,</span><span class="n">F1_BNB3</span><span class="p">,</span><span class="n">F1_BNB2</span><span class="p">)</span>
 
-<span class="c1">#These results are very similar to my values for Logistic Regression and Bernoulli Naive Bayes, with Logistic outperforming Bernoulli Naive Bayes. </span>
-<span class="c1">#This implies that the task is accomplishable by looking at both individualist words and grams of words.</span>
-<span class="c1">#Furthermore the threshold is very important to understanding how many 2-gram models are realized as a lower amount of occurences increases the number </span>
-<span class="c1">#of 2-gram phrases but overfits the data. </span>
+<span class="c1">#These results are significantly underfitting compared to my values for Logistic Regression and Bernoulli Naive Bayes using the bag of words model. </span>
+<span class="c1">#This implies that the task is limited by the number of 2-gram values in the dataset. Changing the M value improves the F1 score of both the regression and </span>
+<span class="c1">#BNB improves the score of the data. Preprocessing signficantly impacts the number of applicable 2-gram words in the dataset as well. Furthermore, limitng the </span>
+<span class="c1">#dataset to only 2-gram values does not cover all the possible disaster phrases in the tweets hence the lower F1 score. </span>
 </pre></div>
 
      </div>
@@ -15663,13 +15664,13 @@ Bernoulli Naive Bayes F1 Score:  0.7161572052401747
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Number of 1-gram and 2-gram phrases in N-Gram Bag:  704
-10, 2-gram words from the N-Gram Bag:
-[&#39;army trench&#39; &#39;big projected&#39; &#39;black hat&#39; &#39;body bag&#39; &#39;body bagging&#39;
- &#39;body bags&#39; &#39;bomb turkey&#39; &#39;bomber detonated&#39; &#39;bomber kills&#39;
- &#39;burning buildings&#39;]
-Logistic Training Score and Dev F1 Score: 0.783495595734817 0.7240618101545254
-Bernoulli Naive Bayes Training and Dev F1 Score:  0.7400468384074942 0.7081930415263749
+<pre>10, 2-gram words from the N-Gram Bag:
+[&#39;40 families&#39; &#39;60 mph&#39; &#39;70 years&#39; &#39;70th anniversary&#39; &#39;aba woman&#39;
+ &#39;abandoned aircraft&#39; &#39;added video&#39; &#39;admits arson&#39; &#39;affected fatal&#39;
+ &#39;air ambulance&#39;]
+Number of 1-gram and 2-gram phrases in N-Gram Bag:  456
+Logistic Training Score and Dev F1 Score: 0.49112616973217166 0.47143890093998553
+Bernoulli Naive Bayes Training and Dev F1 Score:  0.45952300974135035 0.4467609828741623
 </pre>
 </div>
 </div>
@@ -15704,8 +15705,8 @@ and development sets). Then, test it on the Kaggle test data. Submit your result
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Refitting Feature Vectors, Classifier using Bag Of Words using entire Training Data set</span>
 <span class="n">count_vect3</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">binary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">min_df</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-<span class="n">X_TrainBOW</span> <span class="o">=</span> <span class="n">count_vect2</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_Train</span><span class="p">[</span><span class="s2">"text"</span><span class="p">])</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span> 
-<span class="n">X_TestBOW</span> <span class="o">=</span> <span class="n">count_vect2</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="s2">"text"</span><span class="p">])</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+<span class="n">X_TrainBOW</span> <span class="o">=</span> <span class="n">count_vect3</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_Train</span><span class="p">[</span><span class="s2">"text"</span><span class="p">])</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span> 
+<span class="n">X_TestBOW</span> <span class="o">=</span> <span class="n">count_vect3</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="s2">"text"</span><span class="p">])</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
 <span class="n">Y_Train</span> <span class="o">=</span> <span class="n">X_Train</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">"target"</span><span class="p">]</span>
 
 <span class="n">regr4</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s1">'l2'</span><span class="p">,</span><span class="n">solver</span><span class="o">=</span><span class="s1">'saga'</span><span class="p">)</span>
@@ -15718,7 +15719,7 @@ and development sets). Then, test it on the Kaggle test data. Submit your result
 <span class="n">Y_hat</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path_or_buf</span><span class="o">=</span><span class="s2">"HW2.csv"</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span><span class="s1">','</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 <span class="c1">#Insert Kaggle Score below</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"F1 Score according to Kaggle: 0.74655"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"F1 Score according to Kaggle: 0.74685"</span><span class="p">)</span>
 <span class="c1">#This value was slightly higher than my expectations, given my previous L2 function was at just below this range. It is within the range of my previous F1 scores, but the </span>
 <span class="c1">#difference could be attributed to minor variations in how the difference between the Training set and Development set. With each dev score being slightly lower</span>
 <span class="c1">#than the logistic score, taking the differences in the combined data I believe this accurately represents my models accuracy. </span>
@@ -15741,7 +15742,7 @@ and development sets). Then, test it on the Kaggle test data. Submit your result
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>F1 Score according to Kaggle: 0.74655
+<pre>F1 Score according to Kaggle: 0.74685
 </pre>
 </div>
 </div>
@@ -15757,7 +15758,7 @@ and development sets). Then, test it on the Kaggle test data. Submit your result
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="HW2Kaggle.png" alt="Kaggle" /></p>
+<p><img src="HW2Kaggle2.png" alt="Kaggle2" /></p>
 
 </div>
 </div>
