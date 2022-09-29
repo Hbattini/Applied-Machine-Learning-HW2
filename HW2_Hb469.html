@@ -14714,8 +14714,8 @@ of each column is explained in the data description on Kaggle.</p>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_Test</span><span class="p">),</span><span class="s1">'testing points'</span><span class="p">)</span>
 <span class="c1">#2 </span>
 <span class="n">num_Tweets</span> <span class="o">=</span> <span class="n">X_Train</span><span class="p">[</span><span class="s1">'target'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">num_Tweets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">X_Train</span><span class="p">),</span> <span class="s2">"are not of real Disasters."</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">num_Tweets</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">X_Train</span><span class="p">),</span> <span class="s2">"are of real Disasters."</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">num_Tweets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">X_Train</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="s2">"</span><span class="si">% a</span><span class="s2">re not of real Disasters."</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">num_Tweets</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">X_Train</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="s2">"</span><span class="si">% a</span><span class="s2">re of real Disasters."</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14737,8 +14737,8 @@ of each column is explained in the data description on Kaggle.</p>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>7613 training points.
 3263 testing points
-0.5703402075397347 are not of real Disasters.
-0.4296597924602653 are of real Disasters.
+57.03 % are not of real Disasters.
+42.97 % are of real Disasters.
 </pre>
 </div>
 </div>
@@ -14777,7 +14777,9 @@ on the development set, in order to decide what to submit to Kaggle.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X_train</span><span class="p">,</span><span class="n">X_dev</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_Train</span><span class="p">,</span><span class="n">train_size</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Splitting data set to 70% Training, 30% Development randomly</span>
+<span class="n">X_train</span><span class="p">,</span><span class="n">X_dev</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_Train</span><span class="p">,</span><span class="n">train_size</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
 <span class="c1">#Combined split datasets</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">X_train</span><span class="p">,</span><span class="n">X_dev</span><span class="p">])</span>
 <span class="n">lenx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
@@ -14885,31 +14887,25 @@ converted to “good”; this is easily done using nltk.stem).</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Convert to Lowercase to not confuse same letters avoid bad comparisons</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Convert to Lowercase to not confuse same letters that are differentiated by Case.</span>
 <span class="n">df</span><span class="p">[</span><span class="s2">"text"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'text'</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-<span class="c1">#Lemmatize to simplify comparisons</span>
-<span class="c1">#Punctuation to simplify comparisons as well</span>
+<span class="c1">#Lemmatize to simplify comparisons of words that have the same root. </span>
+<span class="c1">#Punctuation to simplify comparisons as well, avoiding cases where punctuation at the end makes the same word differ. </span>
 <span class="n">df</span><span class="p">[</span><span class="s2">"text"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"text"</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">lemat</span><span class="p">)</span>
-<span class="c1">#Removes Stopwords to directly target keywords</span>
+<span class="c1">#Removes Stopwords to directly target keywords.</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">'text'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'text'</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">stopw</span><span class="p">)</span>
-<span class="c1">#Removes Urls and @s from strings as they are irrelevant to keyword comparisons</span>
+<span class="c1">#Removes Urls of the form Https and WWW and @s from strings as they are irrelevant to keyword comparisons.</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">'text'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'text'</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">stripURLS</span><span class="p">)</span>
-<span class="c1">#Remove non english words</span>
+<span class="c1">#Remove non english words, to reduce size of bag of words and inocrrect comparisons. </span>
 <span class="n">df</span><span class="p">[</span><span class="s1">'text'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'text'</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">isEnglish</span><span class="p">)</span>
+
 <span class="n">Y_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">'target'</span><span class="p">]</span>
 <span class="n">Y_dev</span> <span class="o">=</span> <span class="n">X_dev</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">'target'</span><span class="p">]</span>
 
-<span class="n">Y_train</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="c1">#IS THIS NECESSARY?</span>
-<span class="n">Y_dev</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1">#df = df.drop('target',axis=1)</span>
 
 <span class="n">X_t</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">lenx</span><span class="p">,:]</span>
 <span class="n">X_d</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">lenx</span><span class="p">:</span><span class="n">len2x</span><span class="p">,:]</span>
 <span class="n">X_test</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">len2x</span><span class="p">:,:]</span>
-
-
-<span class="c1">#print(df["text"][32])</span>
 </pre></div>
 
      </div>
@@ -14945,13 +14941,15 @@ converted to “good”; this is easily done using nltk.stem).</p>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Threshold M Decision </span>
 <span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
 
-<span class="c1"># vectorize the training set</span>
-<span class="c1"># Threshold = 0.75% as 10% returns 0 words, 1% narrows the pool to 70 which is unsuitable for the study</span>
-<span class="c1"># Between 0.5% and 1% is the sweet spot. </span>
+<span class="c1"># Vectorize the training set and transform the development set. </span>
+<span class="c1"># Threshold ranges, 5,10,15,20,50. Future optimality arises from values greater than 10, as overfitting occurs too frquently for values under 15.</span>
+<span class="c1">#The range of applicable words narrows too far with values greater than 20, therefore the minimum number of occurences was trial and errored iteratively to 15. </span>
+ 
 <span class="n">count_vect</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">binary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">min_df</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-<span class="n">X_train</span> <span class="o">=</span> <span class="n">count_vect</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_t</span><span class="p">[</span><span class="s2">"text"</span><span class="p">])</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span> <span class="c1">#Use combined dataframe am i supposed to only use X_train??</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">count_vect</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_t</span><span class="p">[</span><span class="s2">"text"</span><span class="p">])</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span> 
 <span class="n">X_dev</span> <span class="o">=</span> <span class="n">count_vect</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_d</span><span class="p">[</span><span class="s1">'text'</span><span class="p">])</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
 <span class="n">names</span> <span class="o">=</span> <span class="n">count_vect</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">X_dev</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
@@ -15028,7 +15026,7 @@ converted to “good”; this is easily done using nltk.stem).</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">regr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span><span class="n">solver</span><span class="o">=</span><span class="s1">'saga'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">regr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span><span class="n">solver</span><span class="o">=</span><span class="s1">'saga'</span><span class="p">)</span> <span class="c1"># No regularization term, Saga solver to keep consistency. </span>
 
 <span class="n">regr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">Y_train</span><span class="p">)</span>
 
@@ -15042,8 +15040,9 @@ converted to “good”; this is easily done using nltk.stem).</p>
 <span class="n">F1_xt_1</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">Y_train</span><span class="p">,</span><span class="n">Y_xtrain_hat</span><span class="p">)</span>
 <span class="n">F1_xd_1</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">Y_dev</span><span class="p">,</span><span class="n">Y_xdev_hat</span><span class="p">)</span>
 
-<span class="c1">#The Development set is underfitting compared to the training set</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">F1_xt_1</span><span class="p">,</span><span class="n">F1_xd_1</span><span class="p">)</span>
+<span class="c1">#The Development set is underfitting slightly compared to the training set.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"F1 Score for Training Set: "</span><span class="p">,</span><span class="n">F1_xt_1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"F1 Score for Development Set: "</span><span class="p">,</span> <span class="n">F1_xd_1</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -15063,7 +15062,8 @@ converted to “good”; this is easily done using nltk.stem).</p>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>0.787150450658655 0.7183246073298429
+<pre>F1 Score for Training Set:  0.7895454545454546
+F1 Score for Development Set:  0.7190889370932755
 </pre>
 </div>
 </div>
@@ -15105,7 +15105,7 @@ converted to “good”; this is easily done using nltk.stem).</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">regr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s1">'l1'</span><span class="p">,</span><span class="n">solver</span><span class="o">=</span><span class="s1">'saga'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">regr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s1">'l1'</span><span class="p">,</span><span class="n">solver</span><span class="o">=</span><span class="s1">'saga'</span><span class="p">)</span> <span class="c1">#L1 regularization and Saga solver for consistency. </span>
 <span class="n">regr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">Y_train</span><span class="p">)</span>
 
 
@@ -15119,8 +15119,9 @@ converted to “good”; this is easily done using nltk.stem).</p>
 <span class="n">F1_xt_2</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">Y_train</span><span class="p">,</span><span class="n">Y_xtrain_hat</span><span class="p">)</span>
 <span class="n">F1_xd_2</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">Y_dev</span><span class="p">,</span><span class="n">Y_xdev_hat</span><span class="p">)</span>
 
-<span class="c1">#The Development set is underfitting compared to the training set</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">F1_xt_2</span><span class="p">,</span><span class="n">F1_xd_2</span><span class="p">)</span>
+<span class="c1">#The Development set is underfitting slightly compared to the training set.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"F1 Score for Training Set: "</span><span class="p">,</span><span class="n">F1_xt_2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"F1 Score for Development Set: "</span><span class="p">,</span> <span class="n">F1_xd_2</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -15140,7 +15141,19 @@ converted to “good”; this is easily done using nltk.stem).</p>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>0.7683589138134593 0.71716621253406
+<pre>F1 Score for Training Set:  0.7785016286644951
+F1 Score for Development Set:  0.7246376811594204
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>c:\Users\hruda\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\linear_model\_sag.py:350: ConvergenceWarning: The max_iter was reached which means the coef_ did not converge
+  warnings.warn(
 </pre>
 </div>
 </div>
@@ -15171,7 +15184,7 @@ converted to “good”; this is easily done using nltk.stem).</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">regr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s1">'l2'</span><span class="p">,</span><span class="n">solver</span><span class="o">=</span><span class="s1">'saga'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">regr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s1">'l2'</span><span class="p">,</span><span class="n">solver</span><span class="o">=</span><span class="s1">'saga'</span><span class="p">)</span> <span class="c1">#L2 Regularization and Saga solver for consistency. </span>
 <span class="n">regr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">Y_train</span><span class="p">)</span>
 
 
@@ -15184,7 +15197,9 @@ converted to “good”; this is easily done using nltk.stem).</p>
 <span class="n">F1_xt_3</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">Y_train</span><span class="p">,</span><span class="n">Y_xtrain_hat</span><span class="p">)</span>
 <span class="n">F1_xd_3</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">Y_dev</span><span class="p">,</span><span class="n">Y_xdev_hat</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">F1_xt_3</span><span class="p">,</span><span class="n">F1_xd_3</span><span class="p">)</span>
+<span class="c1">#The Development set is underfitting slightly compared to the training set.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"F1 Score for Training Set: "</span><span class="p">,</span><span class="n">F1_xt_3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"F1 Score for Development Set: "</span><span class="p">,</span> <span class="n">F1_xd_3</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -15204,7 +15219,8 @@ converted to “good”; this is easily done using nltk.stem).</p>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>0.7757404795486601 0.7237479806138933
+<pre>F1 Score for Training Set:  0.7809965237543453
+F1 Score for Development Set:  0.7225592939878654
 </pre>
 </div>
 </div>
@@ -15235,11 +15251,11 @@ converted to “good”; this is easily done using nltk.stem).</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Of the three classifiers, having no penalty performed the best. I observed normal fitting by all three methods and regularization seemed to underfit the data a tad bit. </span>
-<span class="c1"># The values I got for training and development sets respectively for None, L1 and L2 regularization are as follows. It is noted that None performed the best with L2 regularization being a close second. </span>
-<span class="nb">print</span><span class="p">(</span><span class="n">F1_xt_1</span><span class="p">,</span><span class="n">F1_xd_1</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">F1_xt_2</span><span class="p">,</span><span class="n">F1_xd_2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">F1_xt_3</span><span class="p">,</span><span class="n">F1_xd_3</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Of the three classifiers, having no penalty performed the best but marginally. I observed normal fitting by all three methods and regularization seemed to underfit the data a tad bit. </span>
+<span class="c1">#The values I got for training and development sets respectively for None, L1 and L2 regularization are as follows. It is noted that None performed the best with L2 regularization being a close second. </span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"No Regularization Training and Development Set: "</span><span class="p">,</span> <span class="n">F1_xt_1</span><span class="p">,</span><span class="n">F1_xd_1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"L1 Regularization Training and Development Set: "</span><span class="p">,</span> <span class="n">F1_xt_2</span><span class="p">,</span><span class="n">F1_xd_2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"L2 Regularication Training and Development Set: "</span><span class="p">,</span> <span class="n">F1_xt_3</span><span class="p">,</span><span class="n">F1_xd_3</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -15259,9 +15275,9 @@ converted to “good”; this is easily done using nltk.stem).</p>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>0.787150450658655 0.7183246073298429
-0.7683589138134593 0.71716621253406
-0.7757404795486601 0.7237479806138933
+<pre>No Regularization Training and Development Set:  0.7895454545454546 0.7190889370932755
+L1 Regularization Training and Development Set:  0.7785016286644951 0.7246376811594204
+L2 Regularication Training and Development Set:  0.7809965237543453 0.7225592939878654
 </pre>
 </div>
 </div>
@@ -15294,8 +15310,9 @@ converted to “good”; this is easily done using nltk.stem).</p>
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#print(theta.columns)</span>
 <span class="n">theta</span> <span class="o">=</span> <span class="n">theta</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">'words'</span><span class="p">,</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"The 5 most important words weighted by the algorithm deciding if a tweet is about a real disaster are:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">theta</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">'words'</span><span class="p">][:</span><span class="mi">5</span><span class="p">])</span>
-<span class="c1">#10 Most important words deciding if a tweet is about a real disaster</span>
+<span class="c1">#5 Most important words deciding if a tweet is about a real disaster</span>
     
 </pre></div>
 
@@ -15316,11 +15333,12 @@ converted to “good”; this is easily done using nltk.stem).</p>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>debris        3.278771
-typhoon       3.136677
-bombing       3.092289
-spill         2.995971
-earthquake    2.927446
+<pre>The 5 most important words weighted by the algorithm deciding if a tweet is about a real disaster are:
+bombing       3.538424
+debris        3.524337
+airport       3.178497
+typhoon       3.074675
+derailment    3.031157
 Name: words, dtype: float64
 </pre>
 </div>
@@ -15374,20 +15392,19 @@ It’s normal to take α=1.</p>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Bernoulli Naive Bayes Implementation </span>
-
+<span class="c1">#Followed the inclass example exactly to implement BNB</span>
 <span class="n">n</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">d</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">K</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1">#Binary classes = 2</span>
 <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">#Alpha for smoothing</span>
-
 <span class="n">psis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">K</span><span class="p">,</span><span class="n">d</span><span class="p">])</span>
 <span class="n">phis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">K</span><span class="p">])</span>
 
 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
-    <span class="n">X_k</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">Y_train</span> <span class="o">==</span> <span class="n">k</span><span class="p">]</span>
-    
-    <span class="n">psis</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">X_k</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="n">a</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">X_k</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
-    <span class="n">phis</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">X_k</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">X_l</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">Y_train</span> <span class="o">==</span> <span class="n">k</span><span class="p">]</span>
+    <span class="c1">#Laplace Smoothing to avoid 0 probability division</span>
+    <span class="n">psis</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">X_l</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="n">a</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">X_l</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">phis</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">X_l</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
     
 
  
@@ -15412,10 +15429,8 @@ It’s normal to take α=1.</p>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">))</span>
     <span class="n">psis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">psis</span><span class="p">,</span> <span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">d</span><span class="p">))</span>
     
-    <span class="c1"># clip probabilities to avoid log(0)</span>
     <span class="n">psis</span> <span class="o">=</span> <span class="n">psis</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mf">1e-14</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="mf">1e-14</span><span class="p">)</span>
     
-    <span class="c1"># compute log-probabilities</span>
     <span class="n">logpy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">phis</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="n">K</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">logpxy</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">psis</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">psis</span><span class="p">)</span>
     <span class="n">logpyx</span> <span class="o">=</span> <span class="n">logpxy</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">logpy</span>
@@ -15423,9 +15438,10 @@ It’s normal to take α=1.</p>
     <span class="k">return</span> <span class="n">logpyx</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">logpyx</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="n">K</span><span class="p">,</span><span class="n">n</span><span class="p">])</span>
 
 <span class="n">idx</span><span class="p">,</span> <span class="n">logpyx</span> <span class="o">=</span> <span class="n">nb_predictions</span><span class="p">(</span><span class="n">X_dev</span><span class="p">,</span> <span class="n">psis</span><span class="p">,</span> <span class="n">phis</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Probabilites:"</span><span class="p">,</span> <span class="n">phis</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Proportions:"</span><span class="p">,</span> <span class="n">phis</span><span class="p">)</span>
 <span class="n">F1_BNB</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">Y_dev</span><span class="p">,</span><span class="n">idx</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">F1_BNB</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"F1 Score of Development set using Bernoulli Naive Bayes: "</span><span class="p">,</span><span class="n">F1_BNB</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -15445,8 +15461,8 @@ It’s normal to take α=1.</p>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Probabilites: [0.57102646 0.42897354]
-0.7148936170212766
+<pre>Proportions: [0.56708576 0.43291424]
+F1 Score of Development set using Bernoulli Naive Bayes:  0.7161572052401747
 </pre>
 </div>
 </div>
@@ -15482,8 +15498,7 @@ It’s normal to take α=1.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ol>
-<li>The Logistic Regression Model outperforms the Naive Bayes Model in prediciting whether a tweet is of a real disaster. The difference between the F1 scores is minimal. For Logistic Regression and Naive Bayes are listed below. The pros and cons of using generative vs discriminative models are numerous. The pros of using the discriminative model, Logistic Regression, is that we get a score for each instance of a word based on frequency in the twitter text dataset. Furthremore we are able to interpret the models value as the conditional probability of finding y given x. Cons with the discriminative appraoch are that words that are poorly classifying data in the context of missclassifying a point. Using the generative model, Naive Bayes, for this dataset of text classification is good because we are able to filter out a lot of unncessary spam in the text. The pros of this method is generating values and dealing with other texts. The main con is that given an outlier in the dataset, the data will be skewed significantly.</li>
-<li>The assumptions that naive bayes makes are that it assumes every event is independent, so words in the text are independent of other words. This leads to over and under confidence in the accuracy of the models. Comparitvely a logistic regressions assumption is that there is little correlation between explanatory variables. They can lead the model to incorect interpretation. With the assumptions taken by Bernoulli Naive Bayes it is a valid classifier for Natural Language Texts but it is not efficient as text independancy could be a limiting factor in emphasizing the connection between texts.</li>
+<li>The Logistic Regression Model outperforms the Naive Bayes Model in prediciting whether a tweet is of a real disaster. The difference between the F1 scores is minimal, but Logistic outperforms Naive-Bayes. Logistic Regression and Naive Bayes are listed below. The pros and cons of using generative vs discriminative models are numerous. The pros of using the discriminative model, Logistic Regression, is that we get a score for each instance of a word based on frequency in the twitter text dataset. Furthremore we are able to interpret the models value as the conditional probability of finding y given x. Cons with the discriminative appraoch are that words that are poorly classifying data in the context of missclassifying a point. Using the generative model, Naive Bayes, for this dataset of text classification is good because we are able to filter out a lot of unncessary spam in the text. The pros of this method is generating values and dealing with other texts. The main con is that given an outlier in the dataset, the data will be skewed significantly.</li>
 </ol>
 
 </div>
@@ -15498,7 +15513,8 @@ It’s normal to take α=1.</p>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Logistic Regression L2, Naive Bayes </span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Logistic Regression: "</span><span class="p">,</span> <span class="n">F1_xd_3</span><span class="p">,</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">Naive Bayes: "</span><span class="p">,</span> <span class="n">F1_BNB</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Logistic Regression F1 Score:"</span><span class="p">,</span> <span class="n">F1_xd_3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Bernoulli Naive Bayes F1 Score: "</span><span class="p">,</span><span class="n">F1_BNB</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -15518,8 +15534,8 @@ It’s normal to take α=1.</p>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Logistic Regression:  0.7237479806138933 
-Naive Bayes:  0.7148936170212766
+<pre>Logistic Regression F1 Score: 0.7225592939878654
+Bernoulli Naive Bayes F1 Score:  0.7161572052401747
 </pre>
 </div>
 </div>
@@ -15528,6 +15544,20 @@ Naive Bayes:  0.7148936170212766
 
 </div>
 
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ol start="2">
+<li>The assumptions that naive bayes makes are that it assumes every event is independent, so words in the text are independent of other words. This leads to over and under confidence in the accuracy of the models. The values for each feature in Naive bayes is assumed to be Binary and will not work with non-binary data. Comparitvely a logistic regressions assumption is that there is little correlation between explanatory variables. They can lead the model to incorect interpretation. Furthermore, Logistic regression assumes independent variables are linearly related with log odds. With the assumptions taken by Bernoulli Naive Bayes it is a valid classifier for Natural Language Texts but it is not efficient as text independancy could be a limiting factor in emphasizing the connection between texts.</li>
+</ol>
+
+</div>
+</div>
+</div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
@@ -15554,19 +15584,25 @@ Naive Bayes:  0.7148936170212766
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#N-Gram Model</span>
+
+<span class="c1">#Minimum number of words is determined manually using iterative processing to determine which value for M returns an actualized difference between using</span>
+<span class="c1">#the Bag of Words model and N-gram model with 2-grams present in the new word count. Min_df was set to 15 after testing with 50,20,15,10. </span>
 <span class="n">count_vect2</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">ngram_range</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">binary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">min_df</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 <span class="n">Xg_train</span> <span class="o">=</span> <span class="n">count_vect2</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_t</span><span class="p">[</span><span class="s2">"text"</span><span class="p">])</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span> 
 <span class="n">Xg_dev</span> <span class="o">=</span> <span class="n">count_vect2</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_d</span><span class="p">[</span><span class="s1">'text'</span><span class="p">])</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">Xg_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-<span class="c1">#10 2 gram from vocabulary</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Number of 1-gram and 2-gram phrases in N-Gram Bag: "</span><span class="p">,</span> <span class="n">Xg_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1">#10 2 gram from vocabulary to find specifically the 2-gram words. </span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">ngram_range</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">binary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">min_df</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 <span class="n">m</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_t</span><span class="p">[</span><span class="s1">'text'</span><span class="p">])</span>
 <span class="n">names2</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"10, 2-gram words from the N-Gram Bag:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">names2</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="mi">15</span><span class="p">])</span>
 
 
 
-<span class="c1">#Logistic Regression</span>
+<span class="c1">#Logistic Regression due to being marginally superior to Naive-Bayes based on my prior results. </span>
+<span class="c1">#L2 Regularization is used as the difference between all were minimal. </span>
 <span class="n">regr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s1">'l2'</span><span class="p">,</span><span class="n">solver</span><span class="o">=</span><span class="s1">'saga'</span><span class="p">)</span>
 <span class="n">regr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Xg_train</span><span class="p">,</span><span class="n">Y_train</span><span class="p">)</span>
 
@@ -15580,7 +15616,7 @@ Naive Bayes:  0.7148936170212766
 <span class="n">F1_xt</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">Y_train</span><span class="p">,</span><span class="n">Y_xtrain_hat</span><span class="p">)</span>
 <span class="n">F1_xd</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">Y_dev</span><span class="p">,</span><span class="n">Y_xdev_hat</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Logistic Training Score and Dev Score:"</span><span class="p">,</span><span class="n">F1_xt</span><span class="p">,</span><span class="n">F1_xd</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Logistic Training Score and Dev F1 Score:"</span><span class="p">,</span><span class="n">F1_xt</span><span class="p">,</span><span class="n">F1_xd</span><span class="p">)</span>
 
 <span class="c1">#Bernoulli Naive Bayes</span>
 <span class="n">n2</span> <span class="o">=</span> <span class="n">Xg_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -15598,13 +15634,16 @@ Naive Bayes:  0.7148936170212766
     <span class="n">phis2</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">X_k</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 
 <span class="n">idx2</span><span class="p">,</span> <span class="n">logpyx2</span> <span class="o">=</span> <span class="n">nb_predictions</span><span class="p">(</span><span class="n">Xg_dev</span><span class="p">,</span> <span class="n">psis2</span><span class="p">,</span> <span class="n">phis2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Probabilites:"</span><span class="p">,</span> <span class="n">phis</span><span class="p">)</span>
+<span class="n">idx3</span><span class="p">,</span> <span class="n">logpyx3</span> <span class="o">=</span> <span class="n">nb_predictions</span><span class="p">(</span><span class="n">Xg_train</span><span class="p">,</span><span class="n">psis2</span><span class="p">,</span> <span class="n">phis2</span><span class="p">)</span>
+<span class="c1">#print("Proportions:", phis)</span>
 <span class="n">F1_BNB2</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">Y_dev</span><span class="p">,</span><span class="n">idx2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">F1_BNB2</span><span class="p">)</span>
+<span class="n">F1_BNB3</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">Y_train</span><span class="p">,</span><span class="n">idx3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Bernoulli Naive Bayes Training and Dev F1 Score: "</span><span class="p">,</span><span class="n">F1_BNB3</span><span class="p">,</span><span class="n">F1_BNB2</span><span class="p">)</span>
 
-<span class="c1">#These results are very similar to my values for Logistic Regression and Bernoulli Naive Bayes. </span>
+<span class="c1">#These results are very similar to my values for Logistic Regression and Bernoulli Naive Bayes, with Logistic outperforming Bernoulli Naive Bayes. </span>
 <span class="c1">#This implies that the task is accomplishable by looking at both individualist words and grams of words.</span>
-<span class="c1">#Furthermore the threshold is very important to understanding how many 2-gram models are realized</span>
+<span class="c1">#Furthermore the threshold is very important to understanding how many 2-gram models are realized as a lower amount of occurences increases the number </span>
+<span class="c1">#of 2-gram phrases but overfits the data. </span>
 </pre></div>
 
      </div>
@@ -15624,13 +15663,13 @@ Naive Bayes:  0.7148936170212766
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>685
-[&#39;body bag&#39; &#39;body bagging&#39; &#39;bomb turkey&#39; &#39;bomber detonated&#39;
- &#39;burning buildings&#39; &#39;bush fires&#39; &#39;conclusively confirmed&#39; &#39;confirmed pm&#39;
- &#39;content policy&#39; &#39;cross body&#39;]
-Logistic Training Score and Dev Score: 0.7762320207498232 0.7237479806138933
-Probabilites: [0.57102646 0.42897354]
-0.6998359759431382
+<pre>Number of 1-gram and 2-gram phrases in N-Gram Bag:  704
+10, 2-gram words from the N-Gram Bag:
+[&#39;army trench&#39; &#39;big projected&#39; &#39;black hat&#39; &#39;body bag&#39; &#39;body bagging&#39;
+ &#39;body bags&#39; &#39;bomb turkey&#39; &#39;bomber detonated&#39; &#39;bomber kills&#39;
+ &#39;burning buildings&#39;]
+Logistic Training Score and Dev F1 Score: 0.783495595734817 0.7240618101545254
+Bernoulli Naive Bayes Training and Dev F1 Score:  0.7400468384074942 0.7081930415263749
 </pre>
 </div>
 </div>
@@ -15663,7 +15702,8 @@ and development sets). Then, test it on the Kaggle test data. Submit your result
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">count_vect3</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">binary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">min_df</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Refitting Feature Vectors, Classifier using Bag Of Words using entire Training Data set</span>
+<span class="n">count_vect3</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">binary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">min_df</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 <span class="n">X_TrainBOW</span> <span class="o">=</span> <span class="n">count_vect2</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_Train</span><span class="p">[</span><span class="s2">"text"</span><span class="p">])</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span> 
 <span class="n">X_TestBOW</span> <span class="o">=</span> <span class="n">count_vect2</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="s2">"text"</span><span class="p">])</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
 <span class="n">Y_Train</span> <span class="o">=</span> <span class="n">X_Train</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">"target"</span><span class="p">]</span>
@@ -15679,9 +15719,9 @@ and development sets). Then, test it on the Kaggle test data. Submit your result
 
 <span class="c1">#Insert Kaggle Score below</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"F1 Score according to Kaggle: 0.74655"</span><span class="p">)</span>
-<span class="c1">#This value was around my expectations given my previous L2 function was at about this range. It is slightly lower than my actual value, and</span>
-<span class="c1">#could be attributed to minor variations in how the difference between the Training set and Development set. With each dev score being slightly lower</span>
-<span class="c1">#than the logisitc score, taking the combined data I believe this accurately represents my models accuracy. </span>
+<span class="c1">#This value was slightly higher than my expectations, given my previous L2 function was at just below this range. It is within the range of my previous F1 scores, but the </span>
+<span class="c1">#difference could be attributed to minor variations in how the difference between the Training set and Development set. With each dev score being slightly lower</span>
+<span class="c1">#than the logistic score, taking the differences in the combined data I believe this accurately represents my models accuracy. </span>
 </pre></div>
 
      </div>
@@ -15710,6 +15750,18 @@ and development sets). Then, test it on the Kaggle test data. Submit your result
 
 </div>
 
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><img src="HW2Kaggle.png" alt="Kaggle" /></p>
+
+</div>
+</div>
+</div>
 </div>
 </body>
 
